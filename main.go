@@ -1,8 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"booking-app/migrations"
+	"fmt"
+)
 
-
-func main()  {
+func main() {
+	migrations.Migrate()
 	fmt.Println("Hello world")
 }
