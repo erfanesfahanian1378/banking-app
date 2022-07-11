@@ -1,11 +1,11 @@
 package main
 
 import (
-	"booking-app/migrations"
-	"fmt"
+	"booking-app/api"
 )
 
 func main() {
-	migrations.Migrate()
-	fmt.Println("Hello world")
+	// migrations.Migrate()
+	// fmt.Println("Hello world")
+	api.StartApi()
 }
