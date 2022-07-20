@@ -75,16 +75,12 @@ func register(w http.ResponseWriter, r *http.Request) {
 }
 
 func getUser(w http.ResponseWriter, r *http.Request) {
+	// fmt.Println("TOSHE")
 	vars := mux.Vars(r)
 	userId := vars["id"]
-	auth := r.Header.Get("Authorization")
+	// auth := r.Header.Get("Authorization")
 
-	fmt.Println("++++++++++++++++++++++++")
-	fmt.Println(auth)
-	fmt.Println(userId)
-	fmt.Println("++++++++++++++++++++++++")
-
-	user := users.GetUser(userId, auth)
+	user := users.GetUser(userId)
 
 	fmt.Println("--------------------------------------")
 	fmt.Println(user)
@@ -110,7 +106,8 @@ func StartApi() {
 	router.HandleFunc("/login", login).Methods("POST")
 	router.HandleFunc("/register", register).Methods("POST")
 	router.HandleFunc("/transaction", transaction).Methods("POST")
-	router.HandleFunc("/user/{id}", getUser).Methods("GET")
+	// router.HandleFunc("/user/{id}", getUser).Methods("GET")
+	router.Handle("/user/{id}", helpers.Middleware(http.HandlerFunc(getUser)))
 	fmt.Println("App is running on port : 8888")
 	log.Fatal(http.ListenAndServe(":8888", router))
 }

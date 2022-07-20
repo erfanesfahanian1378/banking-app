@@ -1,7 +1,6 @@
 package users
 
 import (
-	"fmt"
 	"time"
 
 	"booking-app/database"
@@ -99,22 +98,18 @@ func Register(username string, email string, pass string) map[string]interface{}
 	}
 }
 
-func GetUser(id string, jwt string) map[string]interface{} {
-	isValid := helpers.ValidateToken(id, jwt)
-	fmt.Println(isValid)
+func GetUser(id string) map[string]interface{} {
+	// isValid := helpers.ValidateToken(id, jwt)
+	// fmt.Println(isValid)
 
-	if isValid {
-		user := &interfaces.User{}
-		if database.DB.Where("id = ?", id).First(&user).RecordNotFound() {
-			return map[string]interface{}{"message": "User not found"}
-		}
-		accounts := []interfaces.ResponseAccount{}
-		database.DB.Table("accounts").Select("id, name, balance").Where("user_id = ?", user.ID).Scan(&accounts)
-
-		var response = prepareResponse(user, accounts, false)
-		return response
-
-	} else {
-		return map[string]interface{}{"message": "not valid token"}
+	user := &interfaces.User{}
+	if database.DB.Where("id = ?", id).First(&user).RecordNotFound() {
+		return map[string]interface{}{"message": "User not found"}
 	}
+	accounts := []interfaces.ResponseAccount{}
+	database.DB.Table("accounts").Select("id, name, balance").Where("user_id = ?", user.ID).Scan(&accounts)
+
+	var response = prepareResponse(user, accounts, false)
+	return response
+
 }
