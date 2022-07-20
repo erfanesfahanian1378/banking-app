@@ -2,10 +2,10 @@ package main
 
 import (
 	"booking-app/api"
+	"booking-app/database"
 )
 
 func main() {
-	// migrations.Migrate()
-	// fmt.Println("Hello world")
+	database.InitDatabase()
 	api.StartApi()
 }

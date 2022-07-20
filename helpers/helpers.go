@@ -11,7 +11,6 @@ import (
 	"booking-app/interfaces"
 
 	"github.com/dgrijalva/jwt-go"
-	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -29,11 +28,11 @@ func HashAndSalt(pass []byte) string {
 	return string(hashed)
 }
 
-func ConnectDB() *gorm.DB {
-	db, err := gorm.Open("postgres", "host=127.0.0.1 port=5432 user=erfan dbname=bankapp password=181352 sslmode=disable")
-	HandleErr(err)
-	return db
-}
+// func ConnectDB() *gorm.DB {
+// 	db, err := gorm.Open("postgres", "host=127.0.0.1 port=5432 user=erfan dbname=bankapp password=181352 sslmode=disable")
+// 	HandleErr(err)
+// 	return db
+// }
 
 func Validation(values []interfaces.Validation) bool {
 	username := regexp.MustCompile(`^([A-Za-z0-9]{5,})+$`)
