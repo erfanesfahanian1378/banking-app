@@ -42,10 +42,10 @@ func readBody(r *http.Request) []byte {
 func apiResponse(call map[string]interface{}, w http.ResponseWriter) {
 	if call["message"] == "well done !" {
 		resp := call
+		w.WriteHeader(http.StatusOK)
 		json.NewEncoder(w).Encode(resp)
 	} else {
-		resp := call
-		json.NewEncoder(w).Encode(resp)
+		http.Error(w, http.StatusText(http.StatusUnauthorized), http.StatusForbidden)
 	}
 }
 
